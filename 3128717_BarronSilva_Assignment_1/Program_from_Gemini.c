@@ -6,8 +6,8 @@ Outputs: Terminal messages
 All Collaborators: Me, Gemini
 Author: Bruno Barron Silva
 Creation date: 9/8/2026
-Revision date: N/A
-Revisions: None
+Revision date: 9/8/2026
+Revisions: Added input validation to ensure the user enters a number. 
 */
 
 #include <stdio.h> // Include the standard input/output library for printf and scanf
@@ -22,8 +22,10 @@ int main() { // Define the main function where execution begins
 
     for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) { // Loop from attempt 1 up to MAX_ATTEMPTS
         printf("Attempt %d/%d. Enter your guess: ", attempt, MAX_ATTEMPTS); // Display current attempt prompt
-        scanf("%d", &guess); // Read the integer input entered by the user
-
+        while (scanf("%d", &guess) != 1) { // Validate input: loops if user enters non-numeric input
+            while (getchar() != '\n'); // Clear the invalid non-numeric characters from the input buffer
+            printf("Invalid input! Please enter a number: "); // Prompt user to enter a valid numeric value
+        } // End of input validation loop
         if (guess == SECRET_NUMBER) { // Check if the user guessed the secret number correctly
             printf("Correct! You win!\n"); // Print winning feedback message
             won = 1; // Mark the outcome flag as won
